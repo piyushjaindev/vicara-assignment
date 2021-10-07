@@ -15,7 +15,6 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
           if (state is LoginStateOTPSent)

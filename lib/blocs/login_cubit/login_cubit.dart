@@ -5,13 +5,13 @@ import '../../services/authentication.dart';
 part 'login_states.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
-  LoginCubit() : super(LoginStateInitial());
+  LoginCubit(this._authentication) : super(LoginStateInitial());
 
-  final Authentication authentication = Authentication();
+  final Authentication _authentication;
 
   void sendOTP(String phone) async {
     try {
-      await authentication.sendOTP(phone);
+      await _authentication.sendOTP(phone);
       emit(LoginStateOTPSent());
     } catch (e) {
       emit(LoginStateError());
@@ -20,7 +20,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
   void verifyOTP(String code) async {
     try {
-      await authentication.verifyOTP(code);
+      await _authentication.verifyOTP(code);
       emit(LoginStateVerified());
     } catch (e) {
       emit(LoginStateError());
@@ -29,7 +29,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
   void signOut() async {
     try {
-      await authentication.signOut();
+      await _authentication.signOut();
       emit(LoginStateInitial());
     } catch (e) {
       emit(LoginStateError());

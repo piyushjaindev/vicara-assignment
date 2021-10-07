@@ -7,11 +7,11 @@ import '../services/authentication.dart';
 enum AuthState { unknown, unauthenticated, authenticated }
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthState.unknown);
+  AuthCubit(this._authentication) : super(AuthState.unknown);
 
   late StreamSubscription _authStateListener;
 
-  final Authentication authentication = Authentication();
+  final Authentication _authentication;
 
   @override
   Future<void> close() async {
@@ -20,7 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void init() {
-    _authStateListener = authentication.user.listen((currentUser) {
+    _authStateListener = _authentication.user.listen((currentUser) {
       if (currentUser == null)
         emit(AuthState.unauthenticated);
       else
